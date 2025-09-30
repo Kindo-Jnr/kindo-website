@@ -13,18 +13,22 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      {!splashDone && <SplashScreen onFinish={() => setSplashDone(true)} />}
-      {splashDone && (
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="about" element={<About />} />
-            <Route path="projects" element={<Projects />} />
-            <Route path="contact" element={<Contact />} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
-      )}
+      <div className="relative">
+        {/* Simple implementation - this works! */}
+        {!splashDone && <SplashScreen onFinish={() => setSplashDone(true)} />}
+        
+        {splashDone && (
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="about" element={<About />} />
+              <Route path="projects" element={<Projects />} />
+              <Route path="contact" element={<Contact />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+        )}
+      </div>
     </BrowserRouter>
   );
 }
