@@ -11,7 +11,7 @@ export default function PageTransition({ title }) {
         clipPath: "circle(150% at 50% 100%)"
       }}
       exit={{ 
-        clipPath: "circle(0% at 50% -100%)"
+        clipPath: "circle(0% at 50% 0%)"
       }}
       transition={{ 
         type: "spring",
