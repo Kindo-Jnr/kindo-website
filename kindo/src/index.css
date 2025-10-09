@@ -10,3 +10,21 @@ body {
   font-family: "Mona Sans", sans-serif;
     @apply bg-transparent text-white;
 }
+.words {
+  overflow: hidden;
+  position: relative;
+  height: 2.5rem; /* adjust to match your text height */
+}
+
+.word {
+  height: 2.5rem;
+  animation: spin_4991 6s cubic-bezier(0.6, 0.1, 0.3, 1) infinite;
+}
+
+@keyframes spin_4991 {
+  0%, 10% { transform: translateY(0%); }
+  25%, 35% { transform: translateY(-100%); }
+  50%, 60% { transform: translateY(-200%); }
+  75%, 85% { transform: translateY(-300%); }
+  100% { transform: translateY(0%); }
+}
