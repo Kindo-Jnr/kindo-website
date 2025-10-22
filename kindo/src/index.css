@@ -10,21 +10,40 @@ body {
   font-family: "Mona Sans", sans-serif;
     @apply bg-transparent text-white;
 }
+/* Words container with responsive height */
 .words {
   overflow: hidden;
   position: relative;
-  height: 2.5rem; /* adjust to match your text height */
+  height: 1.6rem; /* Mobile height */
+}
+
+/* Desktop height */
+@media (min-width: 768px) {
+  .words {
+    height: 2.5rem; /* Desktop height */
+  }
 }
 
 .word {
-  height: 2.5rem;
-  animation: spin_4991 6s cubic-bezier(0.6, 0.1, 0.3, 1) infinite;
+  height: 1.6rem; /* Mobile height */
+  animation: spin_4991 12s cubic-bezier(0.6, 0.1, 0.3, 1) infinite;
+}
+
+/* Desktop height for words */
+@media (min-width: 768px) {
+  .word {
+    height: 2.5rem; /* Desktop height */
+  }
 }
 
 @keyframes spin_4991 {
-  0%, 10% { transform: translateY(0%); }
-  25%, 35% { transform: translateY(-100%); }
-  50%, 60% { transform: translateY(-200%); }
-  75%, 85% { transform: translateY(-300%); }
+  0%, 6.25% { transform: translateY(0%); }           /* Item 1 */
+  12.5%, 18.75% { transform: translateY(-100%); }    /* Item 2 */
+  25%, 31.25% { transform: translateY(-200%); }      /* Item 3 */
+  37.5%, 43.75% { transform: translateY(-300%); }    /* Item 4 */
+  50%, 56.25% { transform: translateY(-400%); }      /* Item 5 */
+  62.5%, 68.75% { transform: translateY(-500%); }    /* Item 6 */
+  75%, 81.25% { transform: translateY(-600%); }      /* Item 7 */
+  87.5%, 93.75% { transform: translateY(-700%); }    /* Item 8 */
   100% { transform: translateY(0%); }
 }

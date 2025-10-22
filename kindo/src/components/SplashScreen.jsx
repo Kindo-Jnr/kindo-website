@@ -97,13 +97,7 @@ export default function SplashScreen({ onFinish }) {
             >
               <motion.h1
                 className="text-6xl md:text-8xl font-bold text-white mb-2"
-                animate={{
-                  textShadow: [
-                    "0 0 20px rgba(59, 130, 246, 0.5)",
-                    "0 0 30px rgba(168, 85, 247, 0.8)",
-                    "0 0 20px rgba(59, 130, 246, 0.5)",
-                  ],
-                }}
+              
                 transition={{
                   duration: 0.5,
                   repeat: Infinity,

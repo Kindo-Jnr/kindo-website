@@ -80,40 +80,12 @@ export default function Hero() {
         backgroundRepeat: "no-repeat",
       }}
     >
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0">
-        {/* Floating particles with parallax */}
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute text-white/5 font-mono text-lg"
-            data-scroll
-            data-scroll-speed={Math.random() * 2 + 0.5}
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -40, 0],
-              opacity: [0.1, 0.4, 0.1],
-              rotate: [0, 180, 360],
-            }}
-            transition={{
-              duration: Math.random() * 6 + 4,
-              repeat: Infinity,
-              delay: Math.random() * 5,
-            }}
-          >
-            {["<>", "{}", "();", "=>", "[]", "/*", "*/", "==="][i % 8]}
-          </motion.div>
-        ))}
-      </div>
-
+     
       {/* Main Content Container */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         {/* Left Side Content */}
         <motion.div
-          className="lg:col-span-6 space-y-8 text-left px-4 sm:px-6 md:px-8 pt-20 md:pt-24 lg:pt-32"
+          className="order-2 lg:order-1 lg:col-span-6 space-y-8 text-left px-4 sm:px-6 md:px-8 pt-0 md:pt-24 lg:pt-32 "
           data-scroll
           data-scroll-speed="0.8"
           initial={{ x: -100, opacity: 0 }}
@@ -131,9 +103,9 @@ export default function Hero() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
-            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white font-light mb-2 sm:mb-3 md:mb-4">
-              Hi, I'm{" "}
-              <span className="text-brand-accent font-bold">Abdulai Kindo</span>
+            <h2 className="text-2xl sm:text-3xl lg:text-5xl text-white font-light mb-2 sm:mb-3 md:mb-4">
+              Hi, I'm{" "} Abdulai {" "}
+              <span className="text-blue-400 font-bold">Kindo</span>!
             </h2>
           </motion.div>
 
@@ -173,7 +145,7 @@ export default function Hero() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.9 }}
           >
-            into real projects
+            into real projects.
           </motion.p>
 
           {/* Hire Me Button */}
@@ -202,25 +174,10 @@ export default function Hero() {
               </motion.button>
             </Magnet>
           </motion.div>
-        </motion.div>
 
-        {/* Right Side Content */}
-        <motion.div
-          className="lg:col-span-6 flex flex-col items-start lg:items-end space-y-12 w-full px-4 sm:px-8"
-          data-scroll
-          data-scroll-speed="0.6"
-          initial={{ x: 100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{
-            type: "spring",
-            stiffness: 100,
-            damping: 20,
-            delay: 0.5,
-          }}
-        >
-          {/* Social Icons */}
+           {/* Social Icons */}
           <motion.div
-            className="flex justify-start lg:justify-end space-x-4 sm:space-x-5 md:space-x-6 w-full -mr-70"
+            className="flex justify-start lg:justify-start space-x-4 sm:space-x-5 md:space-x-6 w-full lg:-mr-20"
             initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 1.2 }}
@@ -271,32 +228,79 @@ export default function Hero() {
               );
             })}
           </motion.div>
+        </motion.div>
 
-          {/* Animation Box */}
-          <motion.div
-            className="relative w-[200px] sm:w-[150px] md:w-[250px] lg:w-[290px] h-[200px] sm:h-[150px] md:h-[250px] lg:h-[250px]
-               bg-white/5 backdrop-blur-2xl rounded-3xl border-2 border-white/10 shadow-2xl 
-               hover:shadow-3xl transition-all duration-500 hover:border-white/20 overflow-hidden -mr-70"
-            data-scroll
-            data-scroll-speed="0.4"
-            whileHover={{ scale: 1.02, y: -5 }}
-            initial={{ y: 50, opacity: 0, scale: 0.8 }}
-            animate={{ y: 0, opacity: 1, scale: 1 }}
-            transition={{ delay: 1.6, type: "spring", stiffness: 200 }}
-          >
-            {/* Glitch Background */}
-            <div className="absolute inset-0 w-full h-full">
-              <LetterGlitch
-                glitchSpeed={50}
-                centerVignette={true}
-                outerVignette={false}
-                smooth={true}
-                style={{ width: "100%", height: "100%" }}
-              />
-            </div>
-          </motion.div>
+       {/* Desktop Animation */}
+        <motion.div
+          className="order-1 lg:order-2 lg:col-span-6 lg:flex justify-center lg:justify-end relative mt-18 lg:mt-0 px-4 mx-auto"
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          <ProfileWithCircularLines />
         </motion.div>
       </div>
     </section>
   );
 }
+/* ---------- Circular Profile Animation ---------- */
+function ProfileWithCircularLines() {
+  return (
+    <motion.div
+      className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-[420px] md:h-[420px] lg:w-[480px] lg:h-[480px] flex items-center justify-center overflow-hidden"
+      whileHover={{ rotate: 0 }}
+    >
+      <motion.svg
+        viewBox="0 0 300 300"
+        className="absolute w-full h-full"
+        animate={{ rotate: 360 }}
+        transition={{ repeat: Infinity, duration: 15, ease: "linear" }}
+        whileHover={{
+          rotate: -360,
+          transition: { repeat: Infinity, duration: 15, ease: "linear" },
+        }}
+      >
+        {/* Arcs */}
+        <circle
+          cx="150"
+          cy="150"
+          r="130"
+          stroke="rgba(59,130,246,0.8)"
+          strokeWidth="3"
+          fill="none"
+          strokeDasharray="120 150"
+          strokeLinecap="round"
+        />
+        <circle
+          cx="150"
+          cy="150"
+          r="130"
+          stroke="rgba(59,130,246,0.4)"
+          strokeWidth="3"
+          fill="none"
+          strokeDasharray="80 190"
+          strokeLinecap="round"
+          transform="rotate(120 150 150)"
+        />
+        <circle
+          cx="150"
+          cy="150"
+          r="130"
+          stroke="rgba(59,130,246,0.6)"
+          strokeWidth="3"
+          fill="none"
+          strokeDasharray="60 220"
+          strokeLinecap="round"
+          transform="rotate(240 150 150)"
+        />
+      </motion.svg>
+
+      <img
+        src="/images/kindo-profile 2.png"
+        alt="Hester Francken"
+        className="w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-cover rounded-full border-4 border-white/30 dark:border-gray-700 shadow-2xl z-10"
+      />
+    </motion.div>
+  );
+}
+
