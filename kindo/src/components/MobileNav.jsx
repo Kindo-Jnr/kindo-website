@@ -13,6 +13,8 @@ import {
   FolderOpen,
   Mail
 } from 'lucide-react';
+import Typewritertext from "./Typewritertext"; 
+import ThemeToggle from "./ThemeToggle"; // Make sure to import ThemeToggle
 
 export default function MobileNav() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -73,9 +75,7 @@ export default function MobileNav() {
             <div className="container mx-auto px-6 flex justify-between items-center">
               {/* Left Side - Code by Kindo */}
               <Link to="/" className="flex items-center">
-                <span className="text-black font-mono text-base">
-                  @ Code by Kindo
-                </span>
+                <Typewritertext text="@ Code by Kindo" speed={200} delay={2500} />
               </Link>
 
               {/* Right Side - Menu Button */}
@@ -198,6 +198,8 @@ export default function MobileNav() {
                 <nav className="flex-1">
                   {navLinks.map((link, index) => {
                     const IconComponent = link.icon;
+                    const isActive = location.pathname === link.path;
+                    
                     return (
                       <motion.div
                         key={link.path}
@@ -210,29 +212,31 @@ export default function MobileNav() {
                           to={link.path}
                           onClick={() => setIsMobileMenuOpen(false)}
                           className={`flex items-center text-xl font-medium transition-colors duration-200 group ${
-                            location.pathname === link.path 
-                              ? 'text-white' 
+                            isActive 
+                              ? 'text-blue-500' 
                               : 'text-gray-300 hover:text-white'
                           }`}
                         >
-                          {/* Active dot */}
-                          {location.pathname === link.path && (
-                            <motion.div
-                              className="w-3 h-3 bg-white rounded-full mr-4"
-                              layoutId="mobileActiveDot"
-                              transition={magneticSpring}
-                            />
-                          )}
+                          {/* Active dot - Blue when active */}
+                          <motion.div
+                            className={`w-3 h-3 rounded-full mr-4 ${
+                              isActive 
+                                ? 'bg-blue-500' 
+                                : 'bg-transparent'
+                            }`}
+                            layoutId="mobileActiveDot"
+                            transition={magneticSpring}
+                          />
                           
-                          {/* Navigation Icon */}
+                          {/* Navigation Icon - Blue when active */}
                           <motion.div
                             className="mr-4"
                             whileHover={{ scale: 1.1 }}
                             transition={magneticSpring}
                           >
                             <IconComponent className={`w-6 h-6 ${
-                              location.pathname === link.path 
-                                ? 'text-white' 
+                              isActive 
+                                ? 'text-blue-500' 
                                 : 'text-gray-400 group-hover:text-white'
                             }`} />
                           </motion.div>
@@ -250,9 +254,26 @@ export default function MobileNav() {
                   })}
                 </nav>
 
+                {/* Theme Toggle Section */}
+                <motion.div
+                  className="border-t border-white/10 pt-6 pb-4"
+                  initial={{ y: 30, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.7 }}
+                >
+                  <p className="text-gray-400 text-sm uppercase tracking-widest mb-4 text-center">
+                    Theme
+                  </p>
+                  <div className="flex justify-center">
+                    <div onClick={() => setIsMobileMenuOpen(false)}>
+                      <ThemeToggle />
+                    </div>
+                  </div>
+                </motion.div>
+
                 {/* Social Links Section */}
                 <motion.div
-                  className="border-t border-white/10 pt-8 pb-6"
+                  className="border-t border-white/10 pt-6 pb-4"
                   initial={{ y: 50, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.8 }}

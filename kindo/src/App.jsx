@@ -7,28 +7,31 @@ import About from "@pages/About";
 import Projects from "@pages/Projects";
 import Contact from "@pages/Contact";
 import NotFound from "@pages/NotFound";
+import { ThemeProvider } from "./context/ThemeContext";
 
 export default function App() {
   const [splashDone, setSplashDone] = useState(false);
 
   return (
-    <BrowserRouter>
-      <div className="relative">
-        {/* Simple implementation - this works! */}
-        {!splashDone && <SplashScreen onFinish={() => setSplashDone(true)} />}
-        
-        {splashDone && (
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Home />} />
-              <Route path="about" element={<About />} />
-              <Route path="projects" element={<Projects />} />
-              <Route path="contact" element={<Contact />} />
-              <Route path="*" element={<NotFound />} />
-            </Route>
-          </Routes>
-        )}
-      </div>
-    </BrowserRouter>
+    <ThemeProvider>
+      <BrowserRouter>
+        <div className="relative">
+          {/* Simple implementation - this works! */}
+          {!splashDone && <SplashScreen onFinish={() => setSplashDone(true)} />}
+          
+          {splashDone && (
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Home />} />
+                <Route path="about" element={<About />} />
+                <Route path="projects" element={<Projects />} />
+                <Route path="contact" element={<Contact />} />
+                <Route path="*" element={<NotFound />} />
+              </Route>
+            </Routes>
+          )}
+        </div>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
