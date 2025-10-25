@@ -71,6 +71,7 @@ export default function MobileNav() {
             initial={{ y: 0, opacity: 1 }}
             exit={{ y: -100, opacity: 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            style={{ color: "var(--text-color)" }}
           >
             <div className="container mx-auto px-6 flex justify-between items-center">
               {/* Left Side - Code by Kindo */}
@@ -81,7 +82,7 @@ export default function MobileNav() {
               {/* Right Side - Menu Button */}
               <motion.button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="relative px-4 py-2 rounded-full font-medium text-sm uppercase tracking-widest text-black bg-white/10 backdrop-blur-sm border border-white/10"
+                className="relative px-4 py-2 rounded-full font-medium text-sm uppercase tracking-widest  backdrop-blur-xl border border-white/10"
                 whileHover={{ 
                   scale: 1.05,
                   backgroundColor: "rgba(255, 255, 255, 0.2)",
@@ -89,6 +90,7 @@ export default function MobileNav() {
                 }}
                 whileTap={{ scale: 0.95 }}
                 transition={magneticSpring}
+                style={{ color: "var(--text-color)" }}
               >
                 .Menu
               </motion.button>

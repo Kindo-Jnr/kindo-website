@@ -29,13 +29,13 @@ export default function Home() {
   const [isVisible, setIsVisible] = useState(true);
 
   const rotatingTexts = [
-    { text: "ideas", icon: Lightbulb, color: "text-blue-400" },
-    { text: "concepts", icon: Palette, color: "text-blue-400" },
-    { text: "designs", icon: Layers, color: "text-blue-400" },
-    { text: "codes", icon: Code2, color: "text-blue-400" },
-    { text: "ideas", icon: Lightbulb, color: "text-blue-400" },
-    { text: "concepts", icon: Palette, color: "text-blue-400" },
-    { text: "designs", icon: Layers, color: "text-blue-400" },
+    { text: "ideas", icon: Lightbulb, color: "text-blue-900" },
+    { text: "concepts", icon: Palette, color: "text-blue-900" },
+    { text: "designs", icon: Layers, color: "text-blue-800" },
+    { text: "codes", icon: Code2, color: "text-blue-800" },
+    { text: "ideas", icon: Lightbulb, color: "text-blue-700" },
+    { text: "concepts", icon: Palette, color: "text-blue-600" },
+    { text: "designs", icon: Layers, color: "text-blue-500" },
     { text: "codes", icon: Code2, color: "text-blue-400" },
   ];
 
@@ -154,7 +154,7 @@ export default function Home() {
           >
             <h2 className="text-2xl sm:text-3xl lg:text-5xl font-light mb-2 sm:mb-3 md:mb-4">
               Hi, I'm Abdulai{" "}
-              <span className="text-blue-400 font-bold">Kindo</span>!
+              <span className="text-blue-700 font-bold">Kindo</span>!
             </h2>
           </motion.div>
 
@@ -205,7 +205,7 @@ export default function Home() {
           >
             <Magnet strength={0.4}>
               <motion.button
-                className="relative px-8 sm:px-10 md:px-12 py-3 sm:py-3.5 md:py-4 bg-blue-500 text-white rounded-full cursor-pointer border border-white font-bold text-base sm:text-lg shadow-md hover:shadow-lg overflow-hidden group"
+                className="relative px-8 sm:px-10 md:px-12 py-3 sm:py-3.5 md:py-4 rounded-full cursor-pointer border  font-bold text-base sm:text-lg shadow-md hover:shadow-lg overflow-hidden group"
                 whileHover={{
                   scale: 1.05,
                   y: -2,
@@ -217,7 +217,7 @@ export default function Home() {
 
                 {/* Circular Fill Animation from Bottom */}
                 <motion.div
-                  className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0 rounded-full bg-blue-600 group-hover:w-[300%] group-hover:h-[300%] transition-all duration-700 ease-out"
+                  className="absolute bottom-0 left-1 transform -translate-x-1/2 w-0 h-0 rounded-full bg-blue-700 group-hover:w-[300%] group-hover:h-[300%] transition-all duration-800 ease-out"
                   style={{ zIndex: 0 }}
                 />
               </motion.button>
@@ -413,7 +413,7 @@ function ProfileWithCircularLines() {
       </motion.svg>
 
       <img
-        src="/images/kindo-profile 2.png"
+        src="/images/kindo-profile2.PNG"
         alt="Abdulai Kindo"
         className="w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-cover rounded-full border-4 border-white/30 shadow-2xl z-10"
         style={{ borderColor: "var(--border-color)" }}

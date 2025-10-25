@@ -96,11 +96,13 @@ export default function Navbar({ scrollY = 0 }) {
                           opacity: isLogoHovered ? 0 : 1,
                         }}
                         transition={ultraMagneticSpring}
+                        style={{ color: "var(--text-color)" }}
                       >
                         <Typewritertext
                           text="@ Code by Kindo"
                           speed={200}
                           delay={2500}
+                          
                         />
                       </motion.div>
 
@@ -331,6 +333,7 @@ export default function Navbar({ scrollY = 0 }) {
                           delay: index * 0.15,
                           ...ultraMagneticSpring,
                         }}
+                        style={{ color: "var(--text-color)" }}
                       >
                         <Magnet>
                           <Link
@@ -339,7 +342,7 @@ export default function Navbar({ scrollY = 0 }) {
                             className={`flex items-center justify-between text-2xl font-bold transition-all duration-300 group ${
                               isActive
                                 ? "text-blue-600"
-                                : "text-gray-600 hover:text-brand-accent"
+                                : " hover:text-brand-accent"
                             }`}
                             // REMOVED the inline style that was overriding the color classes
                           >
@@ -349,7 +352,7 @@ export default function Navbar({ scrollY = 0 }) {
                                 className={`w-4 h-4 rounded-full mr-4 ${
                                   isActive
                                     ? "bg-blue-600 shadow-2xl shadow-brand-accent/60"
-                                    : "bg-gray-600"
+                                    : "shadow-[0_0_10px_2px_rgba(59,130,246,0.7)]"
                                 }`}
                                 whileHover={{
                                   scale: 2,
@@ -382,14 +385,14 @@ export default function Navbar({ scrollY = 0 }) {
 
                 {/* Social Links Section */}
                 <motion.div
-                  className="border-t-2 border-white/20 pt-8"
+                  className="border-t-2 border-white/20 pt-5"
                   style={{ borderColor: "var(--text-color)" }}
                   initial={{ y: 100, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ ...ultraMagneticSpring, delay: 0.6 }}
                 >
                   <p
-                    className="text-gray-400 text-sm uppercase tracking-widest mb-8 font-mono text-center"
+                    className="text-gray-400 text-sm uppercase tracking-widest mb-4 font-mono text-center"
                     style={{ color: "var(--text-color)" }}
                   >
                     Connect With Me
@@ -456,7 +459,7 @@ export default function Navbar({ scrollY = 0 }) {
                 </motion.div>
                 {/* Theme Toggle Section - Separated from social links */}
                 <motion.div
-                  className="border-t-2 border-white/20 pt-8 mb-8"
+                  className="border-t-2 border-white/20 pt-8 mb-8 mt-5"
                   style={{ borderColor: "var(--text-color)" }}
                   initial={{ y: 100, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
@@ -469,7 +472,9 @@ export default function Navbar({ scrollY = 0 }) {
                     Theme
                   </p>
                   <div className="flex justify-center">
+                    <div onClick={() => setIsMobileMenuOpen(false)}>
                     <ThemeToggle />
+                  </div>
                   </div>
                 </motion.div>
               </div>

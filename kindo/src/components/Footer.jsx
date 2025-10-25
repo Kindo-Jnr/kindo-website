@@ -33,7 +33,7 @@ export default function Footer() {
       {/* Center Section */}
       <p className="opacity-70 text-xs sm:text-sm">
         © {new Date().getFullYear()} <Typewritertext
-                                  text=" Code by Kindo"
+                                  text="Code by Kindo"
                                   speed={200}
                                   delay={2500}
                                 />. 

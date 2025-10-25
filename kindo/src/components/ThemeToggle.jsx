@@ -7,12 +7,12 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="p-2 rounded-full transition hover:scale-110"
+      className="p-2 rounded-full transition hover:scale-110 animate-pulse"
       style={{
-        backgroundColor: theme === 'dark' ? '#374151' : '#e5e7eb'
+        backgroundColor: theme === 'dark' ? '#374151' : '#222831'
       }}
     >
-      {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+      {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
     </button>
   )
 }

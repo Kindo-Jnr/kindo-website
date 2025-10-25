@@ -28,7 +28,7 @@ function Typewritertext({ text, speed = 120, delay = 400 }) {
   }, [index, isDeleting, text, speed, delay]);
 
   return (
-      <span className="text-white font-mono text-lg whitespace-nowrap animate-pulse">
+      <span className="font-mono text-lg whitespace-nowrap animate-pulse">
       {displayedText}
       <span className="animate-blink">_</span>
     </span>
