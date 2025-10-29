@@ -46,7 +46,7 @@ export default function SplashScreen({ onFinish }) {
             transition: {
               type: "spring",
               stiffness: 60,
-              damping: 25,
+              damping: 17,
               mass: 1.1,
               bounce: 2.4
             }
