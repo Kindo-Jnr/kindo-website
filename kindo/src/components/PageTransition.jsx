@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 
+
 export default function PageTransition({ title }) {
+   
   return (
     <motion.div
       className="fixed inset-0 bg-black z-40 flex items-center justify-center"
@@ -31,6 +33,7 @@ export default function PageTransition({ title }) {
           damping: 10,
           delay: 0.2
         }}
+        
       >
         {title}
       </motion.h1>

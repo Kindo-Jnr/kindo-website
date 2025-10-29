@@ -61,25 +61,25 @@ export default function Home() {
       icon: Clock,
       value: "2+",
       label: "Years Experience",
-      color: "text-blue-400",
+      color: "text-blue-600",
     },
     {
       icon: CheckCircle,
-      value: "50+",
+      value: "20+",
       label: "Projects Completed",
       color: "text-green-400",
     },
     {
       icon: Users,
-      value: "30+",
+      value: "20+",
       label: "Happy Clients",
-      color: "text-purple-400",
+      color: "text-blue-600",
     },
     {
       icon: Star,
       value: "98%",
       label: "Client Satisfaction",
-      color: "text-yellow-400",
+      color: "text-green-400",
     },
   ];
 
@@ -153,8 +153,8 @@ export default function Home() {
             transition={{ delay: 0.5 }}
           >
             <h2 className="text-2xl sm:text-3xl lg:text-5xl font-light mb-2 sm:mb-3 md:mb-4">
-              Hi, I'm Abdulai{" "}
-              <span className="text-blue-700 font-bold">Kindo</span>!
+              Hi, I'm {" "}
+              <span className="text-blue-700 font-bold">Abdulai Kindo</span>!
             </h2>
           </motion.div>
 
@@ -275,7 +275,7 @@ export default function Home() {
 
                   {/* Tooltip */}
                   <div
-                    className="absolute -top-10 sm:-top-12 left-1/2 transform -translate-x-1/2 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap font-semibold text-xs sm:text-sm shadow-2xl"
+                    className="absolute -top-10 sm:-top-6 left-1/2 transform -translate-x-1/2 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap font-semibold text-xs sm:text-sm shadow-2xl"
                     style={{
                       backgroundColor: "var(--tooltip-bg)",
                       color: "var(--tooltip-text)",
@@ -410,12 +410,34 @@ function ProfileWithCircularLines() {
           strokeLinecap="round"
           transform="rotate(240 150 150)"
         />
+        <circle
+          cx="150"
+          cy="150"
+          r="130"
+          stroke="rgba(59,130,246,0.7)"
+          strokeWidth="3"
+          fill="none"
+          strokeDasharray="30 220"
+          strokeLinecap="round"
+          transform="rotate(240 150 150)"
+        />
+        <circle
+          cx="150"
+          cy="150"
+          r="130"
+          stroke="rgba(59,130,246,0.8)"
+          strokeWidth="3"
+          fill="none"
+          strokeDasharray="10 220"
+          strokeLinecap="round"
+          transform="rotate(240 150 150)"
+        />
       </motion.svg>
 
       <img
         src="/images/kindo-profile2.PNG"
         alt="Abdulai Kindo"
-        className="w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-cover rounded-full border-4 border-white/30 shadow-2xl z-10"
+        className="w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-cover rounded-full   shadow-4xl z-10"
         style={{ borderColor: "var(--border-color)" }}
       />
     </motion.div>

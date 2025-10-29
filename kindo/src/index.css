@@ -10,7 +10,24 @@ body {
   font-family: "Mona Sans", sans-serif;
     @apply bg-transparent text-white;
 }
+/* Ensure no extra scroll space */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
 
+/* Remove any default margins that might cause extra space */
+* {
+  box-sizing: border-box;
+}
+
+/* Ensure the main container takes full height without overflow */
+#__next {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
 /* blinking cursor  */
 @keyframes blink {

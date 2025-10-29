@@ -77,6 +77,7 @@ export default function Navbar({ scrollY = 0 }) {
             initial={{ y: 0, opacity: 1 }}
             exit={{ y: -100, opacity: 0 }}
             transition={magneticSpring}
+            
           >
             <div className="container mx-auto px-8 flex justify-between items-center">
               {/* Logo Area */}
