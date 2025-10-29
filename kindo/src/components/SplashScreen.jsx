@@ -12,8 +12,8 @@ export default function SplashScreen({ onFinish }) {
     { text: "Ciao", language: "" },
     { text: "Hallo", language: "" },
     { text: "こんにちは", language: "" },
-    { text: "안녕하세요", language: "" },
     { text: "你好", language: "" },
+    { text: "Welcome", language: "" },
   ];
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export default function SplashScreen({ onFinish }) {
 
     const closeTimer = setTimeout(() => {
       setShow(false);
-    }, greetings.length * 250 + 500);
+    }, greetings.length * 185 + 500);
 
     return () => {
       clearInterval(greetingInterval);
