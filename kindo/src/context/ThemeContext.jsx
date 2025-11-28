@@ -7,16 +7,21 @@ export const ThemeProvider = ({ children }) => {
 
   useEffect(() => {
     const root = document.documentElement
-    
-    // Set CSS variables for colors
+
     if (theme === 'dark') {
-      root.style.setProperty('--bg-color', '#111827') // gray-900
-      root.style.setProperty('--text-color', '#ffffff') // Fixed: 6 F's instead of 5
+      root.style.setProperty('--bg-color', '#111827') 
+      root.style.setProperty('--text-color', '#ffffff')
+
+      // DARK MODE BACKGROUND IMAGE
+      root.style.setProperty('--bg-image', "url('/images/dark-bg.jpg')")
     } else {
       root.style.setProperty('--bg-color', '#ffffff')
       root.style.setProperty('--text-color', '#111827')
+
+      // LIGHT MODE BACKGROUND IMAGE
+      root.style.setProperty('--bg-image', "url('/images/kindo-profile2.PNG')")
     }
-    
+
     localStorage.setItem('theme', theme)
   }, [theme])
 

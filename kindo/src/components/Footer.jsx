@@ -45,7 +45,7 @@ export default function Footer() {
       <div className="flex items-center justify-center gap-1">
         <span className="opacity-70">All rights reserved</span>
         <Heart size={14} className="text-red-500 animate-pulse" />
-        <span className="opacity-70">by KindoTech</span>
+        <span className="opacity-70">by Abdulai Kindo</span>
       </div>
     </footer>
   );

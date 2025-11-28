@@ -41,7 +41,7 @@ export default function SplashScreen({ onFinish }) {
             y: 0 
           }}
           exit={{
-            clipPath: "circle(100% at 50% -35%)",
+            clipPath: "circle(100% at 50% -18%)",
             y: "-100vh",
             transition: {
               type: "spring",

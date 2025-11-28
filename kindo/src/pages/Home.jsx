@@ -121,7 +121,7 @@ export default function Home() {
       <div
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: `linear-gradient(var(--bg-gradient), var(--bg-gradient)), url('/images/kindo-profile 2.png')`,
+          backgroundImage: `linear-gradient(var(--bg-gradient), var(--bg-gradient)), var(--bg-image)`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundAttachment: "fixed",
@@ -153,7 +153,7 @@ export default function Home() {
             transition={{ delay: 0.5 }}
           >
             <h2 className="text-2xl sm:text-3xl lg:text-5xl font-light mb-2 sm:mb-3 md:mb-4">
-              Hi, I'm {" "}
+              Hi, I'm{" "}
               <span className="text-blue-700 font-bold">Abdulai Kindo</span>!
             </h2>
           </motion.div>
@@ -355,7 +355,7 @@ export default function Home() {
           })}
         </div>
       </motion.div>
-       {/* Footer Section */}
+      {/* Footer Section */}
       <Footer />
     </main>
   );
@@ -441,6 +441,5 @@ function ProfileWithCircularLines() {
         style={{ borderColor: "var(--border-color)" }}
       />
     </motion.div>
-    
   );
 }
