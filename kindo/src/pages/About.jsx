@@ -87,20 +87,20 @@ export default function About() {
 
   const skills = {
     frontend: [
-      { name: "React", level: 83 },
-      { name: "JavaScript", level: 73 },
-      { name: "TypeScript", level: 65 },
-      { name: "Tailwind CSS", level: 92 },
-      { name: "Next.js", level: 88 },
-      { name: "HTML5/CSS3", level: 95 },
+      { name: "React", level: 73 },
+      { name: "JavaScript", level: 63 },
+      { name: "TypeScript", level: 55 },
+      { name: "Tailwind CSS", level: 80 },
+      { name: "Next.js", level: 68 },
+      { name: "HTML5/CSS3", level: 89 },
     ],
     tools: [
-      { name: "Git & GitHub", level: 90 },
-      { name: "Framer Motion", level: 75 },
-      { name: "Figma", level: 80 },
-      { name: "Webpack/Vite", level: 75 },
-      { name: "Jest/Cypress", level: 70 },
-      { name: "Node.js", level: 75 },
+      { name: "Git & GitHub", level: 80 },
+      { name: "Framer Motion", level: 65 },
+      { name: "Figma", level: 70 },
+      { name: "Webpack/Vite", level: 65 },
+      { name: "Jest/Cypress", level: 60 },
+      { name: "Node.js", level: 65 },
     ],
   };
 
@@ -261,7 +261,7 @@ export default function About() {
         </motion.section>
 
         {/* Profile & Bio Section */}
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-20">
+        <section className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-20 -mt-20 lg:mt-0">
           {/* Profile Image with Animation */}
           <motion.div
             className="lg:col-span-5 flex justify-center relative"
@@ -273,13 +273,13 @@ export default function About() {
 
             {/* Glassy Name Background */}
             <motion.div
-              className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 z-20"
+              className="absolute -bottom-15 left-1/2 transform -translate-x-1/2 z-20"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1, duration: 0.6 }}
             >
-              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl px-8 py-4 shadow-md mt-5">
-                <h3 className="text-xl font-bold text-center whitespace-nowrap">
+              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl px-8 py-4 shadow-md">
+                <h3 className="text-xl font-bold text-center whitespace-nowrap animate-pulse">
                   Abubakari Abdulai Kindo
                 </h3>
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/20 to-blue-900/20 -z-10" />
@@ -304,7 +304,7 @@ export default function About() {
               transition={{ type: "spring", stiffness: 300 }}
             >
               <motion.h2
-                className="text-2xl lg:text-3xl font-bold mb-6"
+                className="text-xl lg:text-3xl font-bold mb-6"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
@@ -314,7 +314,7 @@ export default function About() {
                 Matter
               </motion.h2>
 
-              <div className="space-y-4 text-lg leading-relaxed opacity-90">
+              <div className="space-y-4 text-md lg:text-lg leading-relaxed opacity-90">
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
