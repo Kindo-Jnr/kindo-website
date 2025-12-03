@@ -119,9 +119,9 @@ export default function Home() {
     >
       {/* Background Image with Theme Overlay */}
       <div
-        className="absolute inset-0 z-0"
+         className="absolute inset-0 z-0 "
         style={{
-          backgroundImage: `linear-gradient(var(--bg-gradient), var(--bg-gradient)), var(--bg-image)`,
+          backgroundImage: `linear-gradient(var(--bg-gradient), var(--bg-gradient)), url('/images/kindo-profile 2.png')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundAttachment: "fixed",

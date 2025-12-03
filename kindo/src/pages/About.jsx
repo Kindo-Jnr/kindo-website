@@ -143,6 +143,15 @@ export default function About() {
     },
     {
       year: "2026",
+      title: "Spline & 3D development",
+      description:
+        "Expanding into Spline and 3D development",
+      icon: GraduationCap,
+      color: "text-blue-500",
+      bgColor: "bg-blue-500/20",
+    },
+    {
+      year: "2026",
       title: "Full-Stack Expansion",
       description:
         "Expanding into backend technologies and full-stack development",
@@ -550,7 +559,7 @@ export default function About() {
                 transition={{ duration: 0.6 }}
               >
                 <div className="flex items-center gap-3 mb-8">
-                  <Zap className="w-7 h-7 text-blue-600" />
+                  <Zap className="w-7 h-7 text-green-600" />
                   <h3 className="text-2xl font-bold">Tools & Technologies</h3>
                 </div>
                 <div className="space-y-4">
