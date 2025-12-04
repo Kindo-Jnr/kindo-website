@@ -449,7 +449,7 @@ useEffect(() => {
   return (
     <main
       data-scroll-section
-      className="min-h-screen flex flex-col justify-between -mt-24"
+      className="min-h-screen flex flex-col justify-between -mt-24 overflow-x-hidden relative"
       style={{
         backgroundColor: "var(--bg-color)",
         color: "var(--text-color)",
@@ -881,7 +881,7 @@ useEffect(() => {
               </div>
 
               {/* Active Process Details - JavaScript-controlled parallax */}
-              <div className="lg:relative">
+              <div className="lg:relative hidden lg:block">
                 {/* This is the container that will track position */}
                 <div
                   id="parallax-right-side"
