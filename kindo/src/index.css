@@ -86,3 +86,22 @@ html, body {
   87.5%, 93.75% { transform: translateY(-700%); }    /* Item 8 */
   100% { transform: translateY(0%); }
 }
+
+/* Fix for parallax scrolling */
+#parallax-right-side {
+  transition: all 0.3s ease;
+  will-change: transform, opacity;
+}
+
+/* Ensure smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Fix for Safari */
+@supports (-webkit-backdrop-filter: none) {
+  #parallax-right-side {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+}

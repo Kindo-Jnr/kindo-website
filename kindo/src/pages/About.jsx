@@ -246,7 +246,154 @@ export default function About() {
       bgColor: "bg-blue-500/20",
     },
   ];
+ // Add this near your other useEffect hooks
+useEffect(() => {
+  let animationFrameId;
+  let isActive = true;
+  let fixedStartTime = null;
+  let isFixed = false;
 
+  // ========== EASY CONTROLS ==========
+  const appearOffset = 50;    // Appears when section top is 150px from viewport top
+  const disappearOffset = 150; // Disappears when timeline bottom is 100px from viewport bottom
+  const scrollBuffer = 300;    // Extra scroll after timeline before disappearing
+  const fixedTop = '8rem';     // Fixed position from top
+  const fixedRight = 'calc(5% + 1rem)'; // Fixed position from right
+  const fixedWidth = 'calc(40% - 2rem)'; // Fixed width
+  const animationDuration = 300; // Animation duration in ms
+  // ===================================
+
+  const handleParallaxScroll = () => {
+    if (!isActive) return;
+    
+    const rightSide = document.getElementById('parallax-right-side');
+    const processSection = document.querySelector('section.mb-16.lg\\:mb-20.overflow-hidden.relative');
+    
+    if (!rightSide || !processSection) return;
+    
+    const sectionRect = processSection.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    const sectionTop = sectionRect.top;
+    const sectionBottom = sectionRect.bottom;
+    
+    // Get timeline container
+    const timelineContainer = processSection.querySelector('.relative');
+    const timelineRect = timelineContainer ? timelineContainer.getBoundingClientRect() : null;
+    const timelineBottom = timelineRect ? timelineRect.bottom : 0;
+    
+    // Easy control calculations
+    const shouldAppear = sectionTop <= appearOffset;
+    const shouldDisappear = timelineBottom <= (windowHeight - disappearOffset) || 
+                           (sectionBottom - scrollBuffer) <= 0;
+    
+    // Section is in view
+    if (sectionTop < windowHeight && sectionBottom > 0) {
+      if (shouldAppear && !shouldDisappear) {
+        // Should be visible and fixed
+        if (!isFixed) {
+          isFixed = true;
+          fixedStartTime = Date.now();
+        }
+        
+        // Calculate animation progress
+        const timeSinceFixed = isFixed ? Date.now() - fixedStartTime : 0;
+        const animationProgress = Math.min(1, timeSinceFixed / animationDuration);
+        
+        // Apply fixed positioning
+        rightSide.style.position = 'fixed';
+        rightSide.style.top = fixedTop;
+        rightSide.style.right = fixedRight;
+        rightSide.style.width = fixedWidth;
+        rightSide.style.zIndex = '20';
+        
+        // Animate appearance
+        rightSide.style.opacity = String(animationProgress);
+        rightSide.style.transform = `translateX(${100 - (animationProgress * 100)}px)`;
+        rightSide.style.transition = 'opacity 0.3s ease, transform 0.5s ease';
+        
+      } else if (shouldDisappear) {
+        // Should disappear (timeline ended or section ending)
+        isFixed = false;
+        rightSide.style.position = 'absolute';
+        rightSide.style.top = 'auto';
+        rightSide.style.bottom = '0';
+        rightSide.style.right = '0';
+        rightSide.style.width = '100%';
+        rightSide.style.opacity = '1';
+        rightSide.style.transform = 'translateX(0)';
+        rightSide.style.transition = 'all 0.5s ease';
+        
+      } else {
+        // Should not be visible yet (before appear point)
+        isFixed = false;
+        fixedStartTime = null;
+        rightSide.style.position = 'absolute';
+        rightSide.style.top = '0';
+        rightSide.style.right = '0';
+        rightSide.style.width = '100%';
+        rightSide.style.opacity = '0';
+        rightSide.style.transform = 'translateX(100px)';
+      }
+      
+    } else if (sectionTop > windowHeight) {
+      // Section not in view yet (below viewport)
+      isFixed = false;
+      fixedStartTime = null;
+      rightSide.style.position = 'absolute';
+      rightSide.style.top = '0';
+      rightSide.style.right = '0';
+      rightSide.style.width = '100%';
+      rightSide.style.opacity = '0';
+      rightSide.style.transform = 'translateX(100px)';
+      
+    } else if (sectionBottom < 0) {
+      // Section completely scrolled past
+      isFixed = false;
+      fixedStartTime = null;
+      rightSide.style.position = 'absolute';
+      rightSide.style.top = 'auto';
+      rightSide.style.bottom = '0';
+      rightSide.style.right = '0';
+      rightSide.style.width = '100%';
+      rightSide.style.opacity = '1';
+      rightSide.style.transform = 'translateX(0)';
+    }
+  };
+
+  const scrollHandler = () => {
+    if (animationFrameId) {
+      cancelAnimationFrame(animationFrameId);
+    }
+    animationFrameId = requestAnimationFrame(handleParallaxScroll);
+  };
+
+  // Initial setup
+  const init = () => {
+    const rightSide = document.getElementById('parallax-right-side');
+    if (rightSide) {
+      rightSide.style.position = 'absolute';
+      rightSide.style.top = '0';
+      rightSide.style.right = '0';
+      rightSide.style.width = '100%';
+      rightSide.style.opacity = '0';
+      rightSide.style.transform = 'translateX(100px)';
+    }
+    
+    setTimeout(() => handleParallaxScroll(), 100);
+  };
+
+  init();
+  
+  window.addEventListener('scroll', scrollHandler, { passive: true });
+  window.addEventListener('resize', scrollHandler, { passive: true });
+
+  return () => {
+    isActive = false;
+    if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    window.removeEventListener('scroll', scrollHandler);
+    window.removeEventListener('resize', scrollHandler);
+  };
+}, []);
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
   }, []);
@@ -302,7 +449,7 @@ export default function About() {
   return (
     <main
       data-scroll-section
-      className="min-h-screen flex flex-col justify-between"
+      className="min-h-screen flex flex-col justify-between -mt-24"
       style={{
         backgroundColor: "var(--bg-color)",
         color: "var(--text-color)",
@@ -565,251 +712,291 @@ export default function About() {
           </div>
         </motion.section>
 
-      {/* Development Process Section (Replaced Technical Expertise) */}
-<motion.section
-  className="mb-16 lg:mb-20 overflow-hidden"
-  initial={{ opacity: 0, y: 30 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: 1.2 }}
->
-  <div className="max-w-7xl mx-auto">
-    {/* Header */}
-    <motion.div
-      className="text-center mb-12 lg:mb-16"
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-    >
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        className="inline-flex items-center gap-2 px-4 py-2 rounded-full border mb-6"
-        style={{
-          backgroundColor: "var(--card-bg)",
-          borderColor: "var(--border-color)",
-        }}
-      >
-        <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-        <span className="text-sm font-medium">My Development Process</span>
-      </motion.div>
-
-      <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 lg:mb-6">
-        Building with <span className="text-blue-600 dark:text-blue-400">Precision</span>
-      </h2>
-
-      <p className="text-lg lg:text-xl opacity-80 max-w-2xl mx-auto">
-        A structured approach to delivering exceptional web solutions
-      </p>
-    </motion.div>
-
-    <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-      {/* Timeline Section */}
-      <div className="relative">
-        {/* Timeline Line - Fixed for all 6 steps */}
-        <div className="absolute left-8 top-0 bottom-0 w-0.5">
-          <div 
-            className="absolute inset-0"
-            style={{
-              background: "linear-gradient(to bottom, var(--border-color) 0%, transparent 100%)",
-              opacity: 0.3
-            }}
-          />
-          {/* Active progress line */}
-          <motion.div
-            className="absolute top-0 left-0 w-full bg-gradient-to-b from-blue-500 to-blue-700 rounded-full"
-            style={{
-              height: `${((activeProcessIndex + 1) / developmentProcess.length) * 100}%`,
-            }}
-            transition={{ type: "spring", stiffness: 100 }}
-          />
-        </div>
-
-        {/* Timeline Items */}
-        <div className="space-y-6">
-          {developmentProcess.map((process, index) => {
-            const IconComponent = process.icon;
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                onHoverStart={() => setActiveProcessIndex(index)}
-                onClick={() => setActiveProcessIndex(index)}
-                className={`relative group cursor-pointer ${
-                  activeProcessIndex === index ? "scale-[1.02]" : "scale-100"
-                } transition-transform duration-300`}
-              >
-                {/* Timeline Dot */}
-                <div
-                  className={`absolute left-8 transform -translate-x-1/2 w-4 h-4 rounded-full border-2 ${
-                    activeProcessIndex === index
-                      ? "bg-blue-600 border-blue-600 scale-125"
-                      : "bg-transparent border-gray-400"
-                  } transition-all duration-300 z-10`}
-                />
-
-                {/* Content Card */}
-                <div
-                  className={`ml-16 backdrop-blur-xl border rounded-2xl p-5 lg:p-6 transition-all duration-300 ${
-                    activeProcessIndex === index
-                      ? "border-blue-500/50 bg-white/10 dark:bg-black/10"
-                      : "border-gray-300/30 dark:border-gray-700/30 bg-white/5 dark:bg-black/5"
-                  } hover:bg-white/10 dark:hover:bg-black/10`}
-                >
-                  {/* Step and Icon */}
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className={`p-2 rounded-xl bg-gradient-to-r ${process.color}`}>
-                      <IconComponent className="w-5 h-5 text-white" />
-                    </div>
-                    <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-                      {process.step}
-                    </span>
-                    <div className="flex-1 h-px opacity-20" style={{ backgroundColor: "var(--text-color)" }} />
-                    <ArrowRight
-                      className={`w-4 h-4 text-blue-600 dark:text-blue-400 transition-transform duration-300 ${
-                        activeProcessIndex === index
-                          ? "translate-x-1"
-                          : "translate-x-0"
-                      }`}
-                    />
-                  </div>
-
-                  {/* Title and Description */}
-                  <h3 className="text-xl font-bold mb-2">{process.title}</h3>
-                  <p className="opacity-80 text-sm leading-relaxed mb-4">
-                    {process.description}
-                  </p>
-
-                  {/* Features */}
-                  <div className="flex flex-wrap gap-2 mb-3">
-                    {process.features.map((feature, idx) => (
-                      <span
-                        key={idx}
-                        className="px-3 py-1 text-xs rounded-full"
-                        style={{
-                          backgroundColor: "var(--card-bg)",
-                          color: "var(--text-color)",
-                          borderColor: "var(--border-color)",
-                          borderWidth: '1px'
-                        }}
-                      >
-                        {feature}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Progress Indicator */}
-                  {activeProcessIndex === index && (
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: "100%" }}
-                      transition={{ duration: 2 }}
-                      className="h-1 bg-gradient-to-r from-blue-500 to-blue-700 rounded-full mt-3"
-                    />
-                  )}
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Active Process Details with Parallax Effect */}
-      <div className="lg:sticky lg:top-8 lg:self-start lg:h-[calc(100vh-2rem)] lg:overflow-y-auto">
-        {/* This wrapper provides the sticky effect */}
-        <div className="lg:absolute lg:top-0 lg:left-0 lg:right-0 lg:py-4">
-          <motion.div
-            key={activeProcessIndex}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="relative rounded-3xl overflow-hidden"
-          >
-            {/* Process Visualization */}
-            <div className="aspect-square rounded-3xl flex items-center justify-center p-4 sm:p-6 lg:p-8"
-              style={{
-                background: `linear-gradient(135deg, var(--card-bg) 0%, var(--bg-color) 100%)`,
-                borderColor: "var(--border-color)",
-                borderWidth: '1px'
-              }}
+        {/* Development Process Section (Replaced Technical Expertise) */}
+        <motion.section
+          className="mb-16 lg:mb-20 overflow-hidden relative"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.2 }}
+        >
+          <div className="max-w-7xl mx-auto">
+            {/* Header */}
+            <motion.div
+              className="text-center mb-12 lg:mb-16"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
             >
-              <div className="w-full h-full flex flex-col items-center justify-center text-center px-2 sm:px-4">
-                <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 rounded-full flex items-center justify-center mb-4 sm:mb-6"
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border mb-6"
+                style={{
+                  backgroundColor: "var(--card-bg)",
+                  borderColor: "var(--border-color)",
+                }}
+              >
+                <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                <span className="text-sm font-medium">
+                  My Development Process
+                </span>
+              </motion.div>
+
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 lg:mb-6">
+                Building with{" "}
+                <span className="text-blue-600 dark:text-blue-400">
+                  Precision
+                </span>
+              </h2>
+
+              <p className="text-lg lg:text-xl opacity-80 max-w-2xl mx-auto">
+                A structured approach to delivering exceptional web solutions
+              </p>
+            </motion.div>
+
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+              {/* Timeline Section - Left Side */}
+              <div className="relative">
+                {/* Timeline Line - Fixed for all 6 steps */}
+                <div className="absolute left-8 top-0 bottom-0 w-0.5">
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(to bottom, var(--border-color) 0%, transparent 100%)",
+                      opacity: 0.3,
+                    }}
+                  />
+                  {/* Active progress line */}
+                  <motion.div
+                    className="absolute top-0 left-0 w-full bg-gradient-to-b from-blue-500 to-blue-700 rounded-full"
+                    style={{
+                      height: `${
+                        ((activeProcessIndex + 1) / developmentProcess.length) *
+                        100
+                      }%`,
+                    }}
+                    transition={{ type: "spring", stiffness: 100 }}
+                  />
+                </div>
+
+                {/* Timeline Items */}
+                <div className="space-y-6">
+                  {developmentProcess.map((process, index) => {
+                    const IconComponent = process.icon;
+                    return (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, x: -50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6, delay: index * 0.1 }}
+                        onHoverStart={() => setActiveProcessIndex(index)}
+                        onClick={() => setActiveProcessIndex(index)}
+                        className={`relative group cursor-pointer ${
+                          activeProcessIndex === index
+                            ? "scale-[1.02]"
+                            : "scale-100"
+                        } transition-transform duration-300`}
+                      >
+                        {/* Timeline Dot */}
+                        <div
+                          className={`absolute left-8 transform -translate-x-1/2 w-4 h-4 rounded-full border-2 ${
+                            activeProcessIndex === index
+                              ? "bg-blue-600 border-blue-600 scale-125"
+                              : "bg-transparent border-gray-400"
+                          } transition-all duration-300 z-10`}
+                        />
+
+                        {/* Content Card */}
+                        <div
+                          className={`ml-16 backdrop-blur-xl border rounded-2xl p-5 lg:p-6 transition-all duration-300 ${
+                            activeProcessIndex === index
+                              ? "border-blue-500/50 bg-white/10 dark:bg-black/10"
+                              : "border-gray-300/30 dark:border-gray-700/30 bg-white/5 dark:bg-black/5"
+                          } hover:bg-white/10 dark:hover:bg-black/10`}
+                        >
+                          {/* Step and Icon */}
+                          <div className="flex items-center gap-4 mb-4">
+                            <div
+                              className={`p-2 rounded-xl bg-gradient-to-r ${process.color}`}
+                            >
+                              <IconComponent className="w-5 h-5 text-white" />
+                            </div>
+                            <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                              {process.step}
+                            </span>
+                            <div
+                              className="flex-1 h-px opacity-20"
+                              style={{ backgroundColor: "var(--text-color)" }}
+                            />
+                            <ArrowRight
+                              className={`w-4 h-4 text-blue-600 dark:text-blue-400 transition-transform duration-300 ${
+                                activeProcessIndex === index
+                                  ? "translate-x-1"
+                                  : "translate-x-0"
+                              }`}
+                            />
+                          </div>
+
+                          {/* Title and Description */}
+                          <h3 className="text-xl font-bold mb-2">
+                            {process.title}
+                          </h3>
+                          <p className="opacity-80 text-sm leading-relaxed mb-4">
+                            {process.description}
+                          </p>
+
+                          {/* Features */}
+                          <div className="flex flex-wrap gap-2 mb-3">
+                            {process.features.map((feature, idx) => (
+                              <span
+                                key={idx}
+                                className="px-3 py-1 text-xs rounded-full"
+                                style={{
+                                  backgroundColor: "var(--card-bg)",
+                                  color: "var(--text-color)",
+                                  borderColor: "var(--border-color)",
+                                  borderWidth: "1px",
+                                }}
+                              >
+                                {feature}
+                              </span>
+                            ))}
+                          </div>
+
+                          {/* Progress Indicator */}
+                          {activeProcessIndex === index && (
+                            <motion.div
+                              initial={{ width: 0 }}
+                              animate={{ width: "100%" }}
+                              transition={{ duration: 2 }}
+                              className="h-1 bg-gradient-to-r from-blue-500 to-blue-700 rounded-full mt-3"
+                            />
+                          )}
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Active Process Details - JavaScript-controlled parallax */}
+              <div className="lg:relative">
+                {/* This is the container that will track position */}
+                <div
+                  id="parallax-right-side"
+                  className="lg:absolute lg:top-0 lg:w-full transition-all duration-500 ease-out"
                   style={{
-                    background: `linear-gradient(135deg, ${currentProcess.color.split(' ').join(', ')})`
+                    opacity: 0,
+                    transform: "translateX(100px)",
                   }}
                 >
-                  <currentProcess.icon className="w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 text-white" />
-                </div>
-                <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-2 sm:mb-3">{currentProcess.title}</h3>
-                <p className="opacity-80 mb-4 sm:mb-6 max-w-md text-sm sm:text-base">
-                  {currentProcess.fullDescription}
-                </p>
-                
-                {/* Features Grid */}
-                <div className="grid grid-cols-2 gap-2 sm:gap-3 mb-4 sm:mb-6 lg:mb-8 w-full max-w-md">
-                  {currentProcess.features.map((feature, idx) => (
+                  <motion.div
+                    key={activeProcessIndex}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="relative rounded-3xl overflow-hidden"
+                  >
+                    {/* Process Visualization */}
                     <div
-                      key={idx}
-                      className="p-2 sm:p-3 rounded-lg text-center"
+                      className="aspect-square rounded-3xl flex items-center justify-center p-4 sm:p-6 lg:p-8"
+                      style={{
+                        background: `linear-gradient(135deg, var(--card-bg) 0%, var(--bg-color) 100%)`,
+                        borderColor: "var(--border-color)",
+                        borderWidth: "1px",
+                      }}
+                    >
+                      <div className="w-full h-full flex flex-col items-center justify-center text-center px-2 sm:px-4">
+                        <div
+                          className="w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 rounded-full flex items-center justify-center mb-4 sm:mb-6"
+                          style={{
+                            background: `linear-gradient(135deg, ${currentProcess.color
+                              .split(" ")
+                              .join(", ")})`,
+                          }}
+                        >
+                          <currentProcess.icon className="w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16" />
+                        </div>
+                        <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-2 sm:mb-3">
+                          {currentProcess.title}
+                        </h3>
+                        <p className="opacity-80 mb-4 sm:mb-6 max-w-md text-sm sm:text-base">
+                          {currentProcess.fullDescription}
+                        </p>
+
+                        {/* Features Grid */}
+                        <div className="grid grid-cols-2 gap-2 sm:gap-3 mb-4 sm:mb-6 lg:mb-8 w-full max-w-md">
+                          {currentProcess.features.map((feature, idx) => (
+                            <div
+                              key={idx}
+                              className="p-2 sm:p-3 rounded-lg text-center"
+                              style={{
+                                backgroundColor: "var(--card-bg)",
+                                borderColor: "var(--border-color)",
+                                borderWidth: "1px",
+                              }}
+                            >
+                              <span className="text-xs sm:text-sm font-medium">
+                                {feature}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* CTA Button */}
+                        <Magnet
+                          strength={0.3}
+                          className="w-full max-w-xs sm:max-w-sm"
+                        >
+                          <motion.a
+                            href="/contact"
+                            className="relative flex items-center justify-center gap-2 px-4 sm:px-6 lg:px-8 py-3 sm:py-3 lg:py-4 rounded-full cursor-pointer border font-bold text-sm sm:text-base lg:text-lg shadow-lg hover:shadow-xl overflow-hidden w-full group"
+                            style={{
+                              backgroundColor: "var(--card-bg)",
+                              borderColor: "var(--border-color)",
+                            }}
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                          >
+                            {/* Button content */}
+                            <div className="relative z-20 flex items-center justify-center gap-2 w-full">
+                              <span className="truncate">
+                                {currentProcess.buttonText}
+                              </span>
+                              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 group-hover:translate-x-1 transition-transform duration-300" />
+                            </div>
+
+                            {/* Hover background */}
+                            <div className="absolute inset-0 rounded-full overflow-hidden z-10">
+                              <div className="absolute inset-0 bg-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            </div>
+                          </motion.a>
+                        </Magnet>
+                      </div>
+                    </div>
+
+                    {/* Step Counter */}
+                    <div
+                      className="absolute top-4 right-4 px-3 py-2 rounded-xl text-sm backdrop-blur-lg flex items-center gap-2 z-30"
                       style={{
                         backgroundColor: "var(--card-bg)",
                         borderColor: "var(--border-color)",
-                        borderWidth: '1px'
+                        borderWidth: "1px",
                       }}
                     >
-                      <span className="text-xs sm:text-sm font-medium">{feature}</span>
+                      <span className="font-bold">
+                        Step {currentProcess.step}
+                      </span>
+                      <span className="opacity-60">/</span>
+                      <span>06</span>
                     </div>
-                  ))}
+                  </motion.div>
                 </div>
-
-                {/* CTA Button - Fixed */}
-                <Magnet strength={0.3} className="w-full max-w-xs sm:max-w-sm">
-                  <motion.a
-                    href="/contact"
-                    className="relative flex items-center justify-center gap-2 px-4 sm:px-6 lg:px-8 py-3 sm:py-3 lg:py-4 rounded-full cursor-pointer border font-bold text-sm sm:text-base lg:text-lg shadow-lg hover:shadow-xl overflow-hidden w-full group"
-                    style={{
-                      backgroundColor: "var(--card-bg)",
-                      borderColor: "var(--border-color)",
-                    }}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    {/* Button content with proper z-index */}
-                    <div className="relative z-20 flex items-center justify-center gap-2 w-full">
-                      <span className="truncate">{currentProcess.buttonText}</span>
-                      <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 group-hover:translate-x-1 transition-transform duration-300" />
-                    </div>
-                    
-                    {/* Hover background - Fixed to not overflow */}
-                    <div className="absolute inset-0 rounded-full overflow-hidden z-10">
-                      <div className="absolute inset-0 bg-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    </div>
-                  </motion.a>
-                </Magnet>
               </div>
             </div>
-
-            {/* Step Counter */}
-            <div 
-              className="absolute top-4 right-4 px-3 py-2 rounded-xl text-sm backdrop-blur-lg flex items-center gap-2 z-30"
-              style={{
-                backgroundColor: "var(--card-bg)",
-                borderColor: "var(--border-color)",
-                borderWidth: '1px'
-              }}
-            >
-              <span className="font-bold">Step {currentProcess.step}</span>
-              <span className="opacity-60">/</span>
-              <span>06</span>
-            </div>
-          </motion.div>
-        </div>
-      </div>
-    </div>
-  </div>
-</motion.section>
+          </div>
+        </motion.section>
         {/* Timeline Section */}
         <motion.section
           className="mb-16 lg:mb-20"
