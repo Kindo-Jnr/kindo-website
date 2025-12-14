@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import {
   Code2,
@@ -445,6 +445,13 @@ useEffect(() => {
   };
 
   const currentProcess = developmentProcess[activeProcessIndex];
+  
+  const { scrollYProgress } = useScroll({
+  target: timelineRef,
+  offset: ["start start", "end end"],
+});
+
+const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "-20%"]);
 
   return (
     <main
@@ -997,148 +1004,257 @@ useEffect(() => {
             </div>
           </div>
         </motion.section>
-        {/* Timeline Section */}
-        <motion.section
-          className="mb-16 lg:mb-20"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.4 }}
-          ref={timelineRef}
-        >
-          <div className="max-w-4xl mx-auto">
-            <motion.h2
-              className="text-3xl sm:text-4xl font-bold text-center mb-12 lg:mb-16"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+
+        {/* Timeline Section with Image */}
+<motion.section
+  className="mb-8"
+  initial={{ opacity: 0, y: 30 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 1.4 }}
+  ref={timelineRef}
+>
+  <div className="max-w-full mx-auto">
+    <motion.h2
+      className="text-3xl sm:text-4xl font-bold text-center mb-12 lg:mb-16"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+    >
+      Development{" "}
+      <span className="text-blue-600 dark:text-blue-400">Journey</span>
+    </motion.h2>
+
+   <div className="relative lg:flex gap-8 lg:gap-12">
+  {/* Timeline Container - Takes 2/3 width */}
+  <div className="lg:w-2/4">
+    <div className="relative">
+      {/* Animated Timeline Line */}
+      <div className="absolute left-6 top-0 bottom-0 w-0.5 transform -translate-x-1/2 z-0 overflow-hidden">
+        {/* Background Line */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundColor: "var(--border-color)",
+            opacity: 0.3,
+          }}
+        />
+        {/* Animated Progress Line */}
+        <motion.div
+          className="absolute top-0 left-0 w-full bg-gradient-to-b from-blue-500 to-blue-700 rounded-full"
+          style={{
+            height: `${scrollProgress * 100}%`,
+          }}
+          transition={{ type: "spring", stiffness: 50, damping: 20 }}
+        />
+      </div>
+
+      {/* Milestones */}
+      <div className="space-y-8 lg:space-y-12">
+        {milestones.map((milestone, index) => {
+          const IconComponent = milestone.icon;
+          const milestoneProgress = (index + 1) / milestones.length;
+          const isActive = scrollProgress >= milestoneProgress - 0.2;
+
+          return (
+            <motion.div
+              key={index}
+              className="relative flex items-start gap-6 lg:gap-8"
+              initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              Development{" "}
-              <span className="text-blue-600 dark:text-blue-400">Journey</span>
-            </motion.h2>
-
-            <div className="relative">
-              {/* Animated Timeline Line */}
-              <div className="absolute left-6 top-0 bottom-0 w-0.5 transform -translate-x-1/2 z-0 overflow-hidden">
-                {/* Background Line */}
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    backgroundColor: "var(--border-color)",
-                    opacity: 0.3,
-                  }}
-                />
-                {/* Animated Progress Line */}
+              {/* Timeline Dot with Pulse Animation */}
+              <div className="relative z-10 flex-shrink-0">
                 <motion.div
-                  className="absolute top-0 left-0 w-full bg-gradient-to-b from-blue-500 to-blue-700 rounded-full"
+                  className="w-10 h-10 lg:w-12 lg:h-12 rounded-full flex items-center justify-center border-2 shadow-lg relative"
                   style={{
-                    height: `${scrollProgress * 100}%`,
+                    backgroundColor: "var(--card-bg)",
+                    borderColor: isActive
+                      ? "rgb(59, 130, 246)"
+                      : "var(--border-color)",
                   }}
-                  transition={{ type: "spring", stiffness: 50, damping: 20 }}
-                />
-              </div>
+                  animate={{
+                    scale: isActive ? [1, 1.1, 1] : 1,
+                    boxShadow: isActive
+                      ? "0 0 20px rgba(59, 130, 246, 0.5)"
+                      : "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                  }}
+                  transition={{
+                    scale: {
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    },
+                    boxShadow: { duration: 0.3 },
+                  }}
+                >
+                  <IconComponent
+                    className={`w-5 h-5 lg:w-6 lg:h-6 ${milestone.color}`}
+                  />
 
-              {/* Milestones */}
-              <div className="space-y-8 lg:space-y-12">
-                {milestones.map((milestone, index) => {
-                  const IconComponent = milestone.icon;
-                  const milestoneProgress = (index + 1) / milestones.length;
-                  const isActive = scrollProgress >= milestoneProgress - 0.2;
-
-                  return (
+                  {/* Active Ring */}
+                  {isActive && (
                     <motion.div
-                      key={index}
-                      className="relative flex items-start gap-6 lg:gap-8"
-                      initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.6, delay: index * 0.1 }}
-                    >
-                      {/* Timeline Dot with Pulse Animation */}
-                      <div className="relative z-10 flex-shrink-0">
-                        <motion.div
-                          className="w-10 h-10 lg:w-12 lg:h-12 rounded-full flex items-center justify-center border-2 shadow-lg relative"
-                          style={{
-                            backgroundColor: "var(--card-bg)",
-                            borderColor: isActive
-                              ? "rgb(59, 130, 246)"
-                              : "var(--border-color)",
-                          }}
-                          animate={{
-                            scale: isActive ? [1, 1.1, 1] : 1,
-                            boxShadow: isActive
-                              ? "0 0 20px rgba(59, 130, 246, 0.5)"
-                              : "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-                          }}
-                          transition={{
-                            scale: {
-                              duration: 2,
-                              repeat: Infinity,
-                              ease: "easeInOut",
-                            },
-                            boxShadow: { duration: 0.3 },
-                          }}
-                        >
-                          <IconComponent
-                            className={`w-5 h-5 lg:w-6 lg:h-6 ${milestone.color}`}
-                          />
-
-                          {/* Active Ring */}
-                          {isActive && (
-                            <motion.div
-                              className="absolute inset-0 rounded-full border-2"
-                              style={{ borderColor: "rgb(59, 130, 246)" }}
-                              initial={{ scale: 1, opacity: 1 }}
-                              animate={{ scale: 1.5, opacity: 0 }}
-                              transition={{
-                                duration: 2,
-                                repeat: Infinity,
-                                ease: "easeOut",
-                              }}
-                            />
-                          )}
-                        </motion.div>
-                      </div>
-
-                      {/* Content */}
-                      <motion.div
-                        className="flex-1 p-4 lg:p-6 rounded-2xl backdrop-blur-sm border shadow-lg"
-                        style={{
-                          backgroundColor: "var(--card-bg)",
-                          borderColor: isActive
-                            ? "rgb(59, 130, 246)"
-                            : "var(--border-color)",
-                        }}
-                        whileHover={{ scale: 1.02, y: -2 }}
-                        transition={{ type: "spring", stiffness: 300 }}
-                        animate={{
-                          boxShadow: isActive
-                            ? "0 20px 25px -5px rgba(59, 130, 246, 0.2), 0 10px 10px -5px rgba(59, 130, 246, 0.1)"
-                            : "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
-                        }}
-                      >
-                        <div className="flex items-center gap-3 lg:gap-4 mb-3">
-                          <span
-                            className="text-xl lg:text-2xl font-bold px-3 py-1 rounded-full"
-                            style={{
-                              backgroundColor: milestone.bgColor,
-                            }}
-                          >
-                            {milestone.year}
-                          </span>
-                          <h3 className="text-lg lg:text-xl font-bold">
-                            {milestone.title}
-                          </h3>
-                        </div>
-                        <p className="text-base lg:text-lg opacity-80 leading-relaxed">
-                          {milestone.description}
-                        </p>
-                      </motion.div>
-                    </motion.div>
-                  );
-                })}
+                      className="absolute inset-0 rounded-full border-2"
+                      style={{ borderColor: "rgb(59, 130, 246)" }}
+                      initial={{ scale: 1, opacity: 1 }}
+                      animate={{ scale: 1.5, opacity: 0 }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeOut",
+                      }}
+                    />
+                  )}
+                </motion.div>
               </div>
+
+              {/* Content */}
+              <motion.div
+                className="flex-1 p-4 lg:p-6 rounded-2xl backdrop-blur-sm border shadow-lg"
+                style={{
+                  backgroundColor: "var(--card-bg)",
+                  borderColor: isActive
+                    ? "rgb(59, 130, 246)"
+                    : "var(--border-color)",
+                }}
+                whileHover={{ scale: 1.02, y: -2 }}
+                transition={{ type: "spring", stiffness: 300 }}
+                animate={{
+                  boxShadow: isActive
+                    ? "0 20px 25px -5px rgba(59, 130, 246, 0.2), 0 10px 10px -5px rgba(59, 130, 246, 0.1)"
+                    : "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+                }}
+              >
+                <div className="flex items-center gap-3 lg:gap-4 mb-3">
+                  <span
+                    className="text-xl lg:text-2xl font-bold px-3 py-1 rounded-full"
+                    style={{
+                      backgroundColor: milestone.bgColor,
+                    }}
+                  >
+                    {milestone.year}
+                  </span>
+                  <h3 className="text-lg lg:text-xl font-bold">
+                    {milestone.title}
+                  </h3>
+                </div>
+                <p className="text-base lg:text-lg opacity-80 leading-relaxed">
+                  {milestone.description}
+                </p>
+              </motion.div>
+            </motion.div>
+          );
+        })}
+      </div>
+    </div>
+  </div>
+
+  {/* Sticky Image Container - Takes 1/3 width */}
+<div className="lg:w-2/4">
+  {/* Desktop - Sticky within section */}
+  <div className="hidden lg:block">
+    {/*  Sticky MUST be a normal div */}
+    <div className="sticky top-32 h-[calc(100vh-10rem)]">
+      <motion.div
+        className="relative h-full w-full rounded-3xl overflow-hidden group"
+        initial={{ opacity: 0, x: 50 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+      >
+        {/* Image Container with Parallax */}
+        <div className="absolute inset-0 overflow-hidden">
+          <motion.img
+            src="/images/illust.png"
+            alt="Development Journey Visualization"
+            className="w-full h-[120%] object-cover min-h-[120%]"
+            style={{
+              y: imageY, // ✅ SCROLL-BASED (AUTO-REVERSE)
+            }}
+          />
+        </div>
+
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+
+        {/* Content Overlay */}
+        <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-8 text-white z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+          >
+            <span className="text-sm font-semibold tracking-wider uppercase">
+              My Journey
+            </span>
+
+            <h3 className="text-2xl lg:text-3xl font-bold mb-2">
+              Continuous Growth
+            </h3>
+
+            <p className="text-sm lg:text-base opacity-90 leading-relaxed">
+              From learning the basics to mastering modern web technologies,
+              each milestone represents dedication and passion.
+            </p>
+
+            {/* Progress Indicator */}
+          <div className="mt-6">
+            <div className="flex items-center justify-between text-sm mb-2">
+              <span>Journey Progress</span>
+              <span className="font-bold">
+                {Math.round(scrollProgress * 100)}%
+              </span>
+            </div>
+            <div className="h-2 bg-white/20 rounded-full overflow-hidden">
+              <motion.div
+                className="h-full bg-gradient-to-r from-blue-500 to-blue-700"
+                initial={{ width: 0 }}
+                animate={{ width: `${scrollProgress * 100}%` }}
+                transition={{ duration: 2 }}
+              />
             </div>
           </div>
-        </motion.section>
+        </motion.div>
+
+          {/* Decorative Element */}
+          <div className="absolute top-6 right-6 w-12 h-12 rounded-full bg-blue-500/20 backdrop-blur-sm z-20" />
+        </div>
+
+        {/* Floating Elements (UNCHANGED) */}
+        <motion.div
+          className="absolute top-10 left-6 w-8 h-8 rounded-full bg-blue-500/30 backdrop-blur-sm z-10"
+          animate={{ y: [0, -10, 0] }}
+          transition={{ duration: 3, repeat: Infinity }}
+        />
+        <motion.div
+          className="absolute top-20 right-10 w-6 h-6 rounded-full bg-blue-400/20 backdrop-blur-sm z-10"
+          animate={{ y: [0, 15, 0] }}
+          transition={{ duration: 4, repeat: Infinity, delay: 0.5 }}
+        />
+      </motion.div>
+    </div>
+  </div>
+
+  {/* Mobile Image — UNCHANGED */}
+  <div className="block lg:hidden mt-8">
+    <div className="relative rounded-2xl overflow-hidden aspect-video">
+      <img
+        src="/images/illust.png"
+        alt="Development Journey"
+        className="w-full h-full object-cover"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+      <div className="absolute bottom-4 left-4 right-4 text-white">
+        <h3 className="text-lg font-bold">Development Journey</h3>
+        <p className="text-sm opacity-90">Visualizing my growth in tech</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+  </div>
+</motion.section>
       </div>
 
       {/* Footer Section */}
