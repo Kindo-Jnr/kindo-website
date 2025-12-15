@@ -1235,21 +1235,32 @@ const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "-20%"]);
     </div>
   </div>
 
-  {/* Mobile Image — UNCHANGED */}
-  <div className="block lg:hidden mt-8">
-    <div className="relative rounded-2xl overflow-hidden aspect-video">
-      <img
-        src="/images/illust.png"
-        alt="Development Journey"
-        className="w-full h-full object-cover"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-      <div className="absolute bottom-4 left-4 right-4 text-white">
-        <h3 className="text-lg font-bold">Development Journey</h3>
-        <p className="text-sm opacity-90">Visualizing my growth in tech</p>
-      </div>
+  {/* Mobile Video (Hidden on desktop) */}
+<div className="block lg:hidden mt-8">
+  <div className="relative rounded-2xl overflow-hidden aspect-video">
+    
+    <video
+      src="/videos/globe.mp4" 
+      className="w-full h-full object-cover"
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="metadata"
+    />
+
+    {/* Gradient Overlay */}
+    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+
+    {/* Text Overlay */}
+    <div className="absolute bottom-4 left-4 right-4 text-white">
+      <h3 className="text-lg font-bold">Development Journey</h3>
+      <p className="text-sm opacity-90">Visualizing my growth in tech</p>
     </div>
+
   </div>
+</div>
+
 </div>
 
 </div>
