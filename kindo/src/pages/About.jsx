@@ -101,7 +101,7 @@ export default function About() {
       fullDescription:
         "This phase involves comprehensive requirement gathering, user research, and creating detailed project documentation. I work closely with clients to define scope, timeline, and success metrics.",
       icon: Search,
-      color: "from-blue-500 to-cyan-600",
+      color: "from-blue-500 to-cyan-800",
       features: [
         "Requirement Analysis",
         "User Research",
@@ -117,7 +117,7 @@ export default function About() {
       fullDescription:
         "Designing wireframes, prototypes, and final UI mockups using modern design tools. Focusing on user experience, accessibility, and visual aesthetics to create engaging interfaces.",
       icon: Palette,
-      color: "from-purple-500 to-pink-600",
+      color: "from-blue-500 to-blue-900",
       features: ["Wireframing", "Prototyping", "Visual Design", "User Testing"],
       buttonText: "View Design Portfolio",
     },
@@ -129,7 +129,7 @@ export default function About() {
       fullDescription:
         "Implementing designs into functional, responsive web applications using React, Tailwind CSS, and other modern frameworks. Writing clean, maintainable code with best practices.",
       icon: Code2,
-      color: "from-green-500 to-emerald-600",
+      color: "from-green-500 to-emerald-800",
       features: [
         "Frontend Development",
         "Responsive Design",
@@ -146,7 +146,7 @@ export default function About() {
       fullDescription:
         "Rigorous testing including unit tests, integration tests, and user acceptance testing. Performance optimization, bug fixing, and ensuring accessibility standards are met.",
       icon: Shield,
-      color: "from-yellow-500 to-amber-600",
+      color: "from-green-500 to-green-900",
       features: [
         "Unit Testing",
         "Integration Testing",
@@ -163,7 +163,7 @@ export default function About() {
       fullDescription:
         "Setting up hosting, CI/CD pipelines, and deploying applications to production environments. Implementing monitoring, analytics, and ensuring smooth launch transitions.",
       icon: Cloud,
-      color: "from-indigo-500 to-blue-600",
+      color: "from-blue-500 to-blue-800",
       features: [
         "Hosting Setup",
         "CI/CD Pipeline",
@@ -180,7 +180,7 @@ export default function About() {
       fullDescription:
         "Offering continuous support, regular updates, security patches, and feature enhancements. Monitoring performance, analytics, and providing technical support.",
       icon: Wrench,
-      color: "from-red-500 to-orange-600",
+      color: "from-green-500 to-green-600",
       features: [
         "Technical Support",
         "Regular Updates",
@@ -743,7 +743,7 @@ const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "-20%"]);
                   borderColor: "var(--border-color)",
                 }}
               >
-                <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+               
                 <span className="text-sm font-medium">
                   My Development Process
                 </span>
