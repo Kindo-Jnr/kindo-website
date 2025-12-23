@@ -778,15 +778,7 @@ export default function Projects() {
                 </div>
 
                 {/* Tab Indicator */}
-                <div
-                  className="absolute top-4 right-4 px-3 py-2 rounded-xl text-xs font-semibold shadow-lg backdrop-blur-lg"
-                  style={{
-                    backgroundColor: currentItem.accentColor || "#3b82f6",
-                    color: "#ffffff",
-                  }}
-                >
-                  {activeTab === "projects" ? "PROJECT" : "EXPERIENCE"}
-                </div>
+               
 
                 {/* Mobile Navigation Dots - Bottom center */}
                 <div className="absolute bottom-4 right-4 flex gap-2 sm:hidden">
@@ -919,23 +911,25 @@ export default function Projects() {
             />
           </div>
 
-          {/* Scroll Indicator */}
-          <div className="flex justify-center items-center gap-2 mt-6">
-            <div className="flex gap-1">
-              {[1, 2, 3].map((dot) => (
-                <div
-                  key={dot}
-                  className={`w-1 h-1 rounded-full ${
-                    dot === 2 ? "opacity-100" : "opacity-30"
-                  }`}
-                  style={{ backgroundColor: "var(--text-color)" }}
-                />
-              ))}
-            </div>
-            <span className="text-xs" style={{ opacity: 0.7 }}>
-              Continuously expanding technology stack
-            </span>
-          </div>
+          {/* Animated Loading Dots Indicator */}
+<div className="flex justify-center items-center gap-3 mt-6">
+  <div className="flex gap-1.5 items-center">
+    {[1, 2, 3].map((dot) => (
+      <div
+        key={dot}
+        className="w-2 h-2 rounded-full"
+        style={{
+          backgroundColor: "var(--text-color)",
+          animation: `bounce-dots 1.5s ease-in-out infinite ${dot * 0.2}s`,
+          opacity: 0.4
+        }}
+      />
+    ))}
+  </div>
+  <span className="text-xs" style={{ opacity: 0.7 }}>
+    Continuously expanding technology stack
+  </span>
+</div>
         </motion.div>
       </div>
 

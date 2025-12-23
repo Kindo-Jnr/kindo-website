@@ -105,3 +105,58 @@ html {
     backdrop-filter: blur(10px);
   }
 }
+
+/* Ensure sticky positioning works within grid */
+.sticky {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  align-self: flex-start; /* Prevents stretching */
+}
+
+/* Prevent overflow issues */
+.lg\:col-span-1 {
+  overflow: visible;
+}
+
+.lg\:col-span-2 {
+  overflow: visible;
+}
+
+/* Ensure the section container doesn't restrict sticky */
+.mb-8 {
+  overflow: visible;
+}
+
+@keyframes bounce-dots {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  25% {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+  75% {
+    opacity: 0.6;
+    transform: scale(0.9);
+  }
+}
+
+/* In your global.css or tailwind.css */
+.sticky {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  align-self: flex-start; /* Prevents stretching */
+}
+
+/* Prevent overflow issues in parent containers */
+section {
+  overflow: visible !important;
+}
+
+/* Ensure no transform on parent containers */
+.lg\:col-span-1,
+.lg\:col-span-2,
+.lg\:col-span-3 {
+  transform: none !important;
+}
