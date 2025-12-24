@@ -12,6 +12,7 @@ import {
   User,
   Folder,
   Mail,
+  ClipboardList,
 } from "lucide-react";
 import Magnet from "./Magnet";
 import Typewritertext from "./Typewritertext";
@@ -29,6 +30,7 @@ export default function Navbar({ scrollY = 0 }) {
   const navLinks = [
     { path: "/", label: "Home", icon: Home },
     { path: "/about", label: "About", icon: User },
+    { path: "/resume", label: "Resume", icon: ClipboardList },
     { path: "/projects", label: "Projects", icon: Folder },
     { path: "/contact", label: "Contact", icon: Mail },
   ];

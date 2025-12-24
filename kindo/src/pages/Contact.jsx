@@ -171,7 +171,7 @@ export default function Contact() {
                     href="https://linkedin.com/in/yourusername"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md"
+                    className="flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md  hover:text-blue-400"
                     style={{
                       backgroundColor: "var(--card-bg)",
                       border: "1px solid var(--border-color)",
@@ -187,7 +187,7 @@ export default function Contact() {
                     href="https://github.com/yourusername"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md"
+                    className="flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md hover:text-gray-400"
                     style={{
                       backgroundColor: "var(--card-bg)",
                       border: "1px solid var(--border-color)",
@@ -203,7 +203,7 @@ export default function Contact() {
                     href="https://wa.me/yourphonenumber"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md"
+                    className="flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md hover:text-green-400"
                     style={{
                       backgroundColor: "var(--card-bg)",
                       border: "1px solid var(--border-color)",
@@ -217,7 +217,7 @@ export default function Contact() {
 
                   <motion.a
                     href="mailto:your.email@example.com"
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md"
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md hover:text-red-400"
                     style={{
                       backgroundColor: "var(--card-bg)",
                       border: "1px solid var(--border-color)",
@@ -235,7 +235,7 @@ export default function Contact() {
                     href="https://yourportfolio.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md"
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md hover:text-purple-400"
                     style={{
                       backgroundColor: "var(--card-bg)",
                       border: "1px solid var(--border-color)",
@@ -260,29 +260,11 @@ export default function Contact() {
                     <MapPin size={20} className="text-blue-500" />
                     <div className="text-left">
                       <div className="font-medium">Location</div>
-                      <div className="text-sm opacity-70">Available for remote work worldwide</div>
+                      <div className="text-sm opacity-70">Available for remote and on site work worldwide</div>
                     </div>
                   </motion.div>
                 </motion.div>
 
-                {/* Availability */}
-                <motion.div 
-                  className="rounded-xl p-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.6 }}
-                  style={{
-                    backgroundColor: "var(--card-bg)",
-                    border: "1px solid var(--border-color)",
-                  }}
-                >
-                  <div className="text-sm text-blue-600 dark:text-blue-400 font-medium mb-1">
-                    🚀 Currently Available
-                  </div>
-                  <div className="text-xs opacity-70">
-                    Open to new frontend development projects and collaborations
-                  </div>
-                </motion.div>
               </div>
             </motion.div>
 
@@ -364,7 +346,7 @@ export default function Contact() {
                           border: "1px solid var(--border-color)",
                           color: "var(--text-color)",
                         }}
-                        placeholder="john@example.com"
+                        placeholder="john@doe.com"
                       />
                     </div>
                   </motion.div>
@@ -422,7 +404,7 @@ export default function Contact() {
                         border: "1px solid var(--border-color)",
                         color: "var(--text-color)",
                       }}
-                      placeholder="Describe your project, goals, timeline, and any specific technologies or features you have in mind..."
+                      placeholder="Hello Kindo, can you help me with..."
                     />
                   </motion.div>
 
@@ -490,7 +472,7 @@ export default function Contact() {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 1 }}
                 >
-                  <p>💡 I typically respond within 24 hours. Looking forward to discussing your project!</p>
+                  <p>I typically respond within 24 hours. Looking forward to discussing your project!</p>
                 </motion.div>
               </div>
             </motion.div>
